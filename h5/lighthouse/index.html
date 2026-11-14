@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>雾岛灯塔 · 守塔人 · 雾汀</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="backdrop" id="backdrop"></div>
+<div class="hero">
+  <div class="topbar">
+    <a href="../index.html" class="link-btn" style="text-decoration:none;">← 雾汀地图</a>
+    <span class="spacer"></span>
+    <span class="seed-tag" id="seed-tag">种子 #—</span>
+    <button class="link-btn" id="btn-new">换一局</button>
+    <button class="link-btn" id="btn-restart">重新开始</button>
+  </div>
+
+  <div class="hero-title">
+  <h1>雾岛灯塔 · 守塔人</h1>
+  <p class="sub">你是雾岛灯塔的守塔人，要守满 30 夜。<br>
+  灯亮着要烧油，不亮船就看不见你。</p>
+  </div>
+</div>
+<div class="wrap">
+  <div class="card">
+    <p class="meta">怎么玩</p>
+    <p>每天：先看发生什么事，再做两件事，入夜决定点灯。全亮 3 油、半亮 1 油、熄灯 0 油。守满 30 夜且声望 ≥ 50：留任。声望归零、灯塔垮了、或连续 3 夜熄灯：撤职。油价每天会变，有人半夜偷油。</p>
+    <p class="meta">船期背后可能有规律。点「船期记录」看船来的日子，自己找规律。</p>
+    <button class="btn" id="btn-help">复制求援提示词<span class="hint">把当前状态和船期记录整理好，贴给你的 AI 一起规划（只含已见信息，不含答案）</span></button>
+  </div>
+
+  <div id="game"></div>
+
+  <p class="small">进度自动保存在本机浏览器里，刷新不丢。种子号在页面上方，分享同一局给别人时，把带 ?seed= 的链接发过去就行。</p>
+</div>
+<script src="../assets/backdrops.js"></script>
+<script src="../assets/common.js"></script>
+<script>window.FogBackdrop.mount("lighthouse", document.getElementById("backdrop"));</script>
+<script src="game.js"></script>
+</body>
+</html>

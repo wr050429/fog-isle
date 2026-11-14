@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>灯塔熄灭之夜 · 雾汀跑团</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="backdrop" id="backdrop"></div>
+<div class="hero">
+  <div class="topbar">
+    <a href="../index.html" class="link-btn" style="text-decoration:none;">← 雾汀地图</a>
+    <span class="spacer"></span>
+    <span class="seed-tag">跑团本 · 1–2 名调查员 · 约 2–3 小时</span>
+  </div>
+
+  <div class="hero-title">
+  <h1>灯塔熄灭之夜</h1>
+  <p class="sub">雾汀跑团 · 雾岛灯塔熄了三夜，守塔人老周失踪了。<br>
+  你是调查员，去雾港查。主持人是你的 AI——把提示词贴给它，它来带团。</p>
+  </div>
+</div>
+<div class="wrap">
+  <div class="card">
+    <p class="meta">怎么玩</p>
+    <p>1. 点下面的「一键复制 AI 主持人提示词」，贴给你的 AI（DeepSeek、GPT、Grok 都行），它来当主持人。提示词里有剧本和真相，复制后直接粘贴，别细看。<br>
+    2. 选一张角色卡，读开局电报。<br>
+    3. 跟主持人说话，说你要去哪、问谁、查什么；要掷骰子的时候，在下面的 d100 骰子里选技能、掷一把，把结果告诉主持人。<br>
+    4. 线索记在调查笔记本里；卡住了，点「复制本回合求援提示词」，问另一个 AI 帮忙推理。</p>
+  </div>
+
+  <div id="game"></div>
+
+  <p class="small">角色卡、手稿领取和笔记本存在本机浏览器里，刷新不丢。剧本和真相在页面上不显示，只活在主持人提示词里。</p>
+</div>
+<script src="../assets/backdrops.js"></script>
+<script src="../assets/common.js"></script>
+<script>window.FogBackdrop.mount("rpg", document.getElementById("backdrop"));</script>
+<script src="../assets/rpg.js"></script>
+<script src="../assets/creature.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
