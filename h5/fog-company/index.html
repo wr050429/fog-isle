@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>白班与夜班 · 雾汀生物</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="backdrop" id="backdrop"></div>
+<div class="hero">
+  <div class="topbar">
+    <a href="../index.html" class="link-btn" style="text-decoration:none;">← 雾汀地图</a>
+    <span class="spacer"></span>
+    <span class="seed-tag">跑团本 · 2–4 名玩家 · 约 3–4 小时</span>
+  </div>
+
+  <div class="hero-title">
+  <h1>雾汀生物 · 白班与夜班</h1>
+  <p class="sub">一家生物科技公司，收容研究雾岛之主。<br>
+  白班与夜班是不同的两个人——白天发生的事，夜班只能靠交班表和保安登记反推。</p>
+  </div>
+</div>
+<div class="wrap">
+  <div class="card">
+    <p class="meta">怎么玩</p>
+    <p>1. 点下面的「一键复制 AI 主持人提示词」，贴给你的 AI，它来当主持人。提示词里有剧本和真相，复制后直接粘贴，别细看。<br>
+    2. 选一张角色卡，读公司地图。<br>
+    3. 两个人玩：白班在下面写交班表，导出成文字发给夜班；夜班导入后，对照保安登记找矛盾。一个人玩：你只扮演其中一班，另一班由 AI 主持人扮演（提示词里写清楚了）。<br>
+    4. 要掷骰子的时候，在下面的 d100 骰子里选技能、掷一把，把结果告诉主持人。线索记在调查笔记本里。</p>
+  </div>
+
+  <div id="game"></div>
+
+  <p class="small">角色卡、手稿领取、交班表、导入的表和笔记本存在本机浏览器里，刷新不丢。剧本和真相在页面上不显示，只活在主持人提示词里。</p>
+</div>
+<script src="../assets/backdrops.js"></script>
+<script src="../assets/common.js"></script>
+<script>window.FogBackdrop.mount("company", document.getElementById("backdrop"));</script>
+<script src="../assets/rpg.js"></script>
+<script src="../assets/creature.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

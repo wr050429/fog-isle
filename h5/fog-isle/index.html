@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>雾岛育种所 · 雾汀</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="backdrop" id="backdrop"></div>
+<div class="hero">
+  <div class="topbar">
+    <a href="../index.html" class="link-btn" style="text-decoration:none;">← 雾汀地图</a>
+    <span class="spacer"></span>
+    <span class="seed-tag" id="seed-tag">种子 #—</span>
+    <button class="link-btn" id="btn-new">换一季</button>
+    <button class="link-btn" id="btn-restart">重新开始</button>
+  </div>
+
+  <div class="hero-title">
+  <h1>雾岛育种所</h1>
+  <p class="sub">两人合作育种：一季 30 天，每天每人 2 个行动点。<br>
+  传说目标藏在图鉴末尾——培育出一只同时拥有 3 个稀有性状的雾兽。</p>
+  </div>
+</div>
+<div class="wrap">
+  <div class="card">
+    <p class="meta">怎么玩</p>
+    <p>你是饲养员 A 和 B——一个人管两边。每天每人 2 个行动点：繁殖、探索、买、卖、做委托、买神秘蛋、向对方借配种、和对方交易。A 行动完换 B，B 结束进入夜晚（随机事件、市场轮换）。一季 30 天。</p>
+    <p class="meta">也可以让 AI 当另一位饲养员：轮到 B 的时候点下面的按钮，提示词开头会写明“你是饲养员 B”，把 B 能看到的局面贴给你的 AI，让它帮 B 做决定。</p>
+    <button class="btn" id="btn-help">复制求援提示词<span class="hint">把当前饲养员能看到的局面整理好，贴给你的 AI 一起推理（只含已见信息：外显性状、繁殖记录、图鉴进度；图鉴只记见过哪些性状、出现在哪些个体上，不含基因型与表达规则——规则要靠繁殖实验自己摸索，季末揭晓才显示）</span></button>
+  </div>
+
+  <div id="game"></div>
+
+  <p class="small">进度自动保存在本机浏览器里，刷新不丢。种子号在页面上方，分享同一季给别人时，把带 ?seed= 的链接发过去就行。换种子，基因系统全变，上一季的规律不再适用。</p>
+</div>
+<script src="../assets/backdrops.js"></script>
+<script src="../assets/common.js"></script>
+<script>window.FogBackdrop.mount("isle", document.getElementById("backdrop"));</script>
+<script src="game.js"></script>
+</body>
+</html>
