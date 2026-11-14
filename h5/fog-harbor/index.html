@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>雾港电报局 · 午夜班 · 雾汀</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="backdrop" id="backdrop"></div>
+<div class="hero">
+  <div class="topbar">
+    <a href="../index.html" class="link-btn" style="text-decoration:none;">← 雾汀地图</a>
+    <span class="spacer"></span>
+    <span class="seed-tag" id="seed-tag">种子 #—</span>
+    <button class="link-btn" id="btn-new">换一局</button>
+    <button class="link-btn" id="btn-restart">重新开始</button>
+  </div>
+
+  <div class="hero-title">
+  <h1>雾港电报局 · 午夜班</h1>
+  <p class="sub">雾港，海关仓库。清晨六点，值班员发现保险箱空了。<br>
+  保险箱是在昨晚 00:00—02:00 之间被人从仓库取走的。</p>
+  </div>
+</div>
+<div class="wrap">
+  <div class="card">
+    <p class="meta">怎么玩</p>
+    <p>你是夜班电报员，手头有五个人的口供和一批记录。要答三道题：谁偷的、怎么进的、为什么。点一份记录读它的全文；三道题都选好，点「指认」。你只有 3 次指认机会。</p>
+    <p class="meta">注意：记录里有一份是伪造的，是窃贼栽赃给别人的。别被它带偏——先想想，哪份记录是假的。</p>
+    <button class="btn" id="btn-help">复制求援提示词<span class="hint">把口供和你已读的记录整理好，贴给你的 AI 一起推理（只含已见信息，不含答案）</span></button>
+  </div>
+
+  <div id="game"></div>
+
+  <p class="small">进度自动保存在本机浏览器里，刷新不丢。种子号在页面上方，分享同一局给别人时，把带 ?seed= 的链接发过去就行。</p>
+</div>
+<script src="../assets/backdrops.js"></script>
+<script src="../assets/common.js"></script>
+<script src="../assets/creature.js"></script>
+<script>window.FogBackdrop.mount("harbor", document.getElementById("backdrop"));</script>
+<script src="game.js"></script>
+</body>
+</html>
