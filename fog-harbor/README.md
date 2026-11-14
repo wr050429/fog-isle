@@ -17,17 +17,27 @@
 | `REFEREE.md` | 裁判手册（`--export` 后生成，含全部记录） |
 | `SEALED.md` | **密封：玩家勿看**（`--export` 后生成，含真相） |
 
-## 玩法
+## 自己生成一局
+
+仓库里不附带预生成的开局提示、裁判手册或答案。任选一个数字作为种子，在本目录运行：
 
 ```bash
-python3 game.py --seed 42 --export   # 生成一局（PROMPT / REFEREE / SEALED）
-python3 game.py --seed 42 --reveal   # 看真相（上帝复盘模式）
+python3 game.py --seed 数字 --export
+```
+
+这会在本地生成 `PROMPT.md`、`REFEREE.md` 和 `SEALED.md`。换一个数字就是新一局，生成的文件只留在你自己的电脑上。
+
+裁判留下 `REFEREE.md` 和 `SEALED.md`，只把 `PROMPT.md` 给玩家或网页 AI。
+
+```bash
+python3 game.py --seed 数字 --reveal   # 看真相（上帝复盘模式，裁判用）
 ```
 
 - 把 `PROMPT.md` 贴给玩家 AI。
 - 玩家说「读 N 号」，把 `REFEREE.md` 里对应的记录原文贴回去。
 - 指认格式：`人名 + 记录A + 记录B`。
 - 最多读 6 份，提问 2 次，指认 3 次。
+- 不要把 `REFEREE.md` 或 `SEALED.md` 本身贴给玩家。
 
 ## 机制说明
 
