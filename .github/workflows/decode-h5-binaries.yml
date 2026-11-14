@@ -1,0 +1,36 @@
+name: decode-h5-binaries
+# One-off helper: the repo was populated through an API that only takes text,
+# so the H5 binary assets were uploaded as base64 (.b64). This job decodes them,
+# checks SHA-256 against the originals, commits the real files and removes the .b64.
+# Safe to delete afterwards.
+on:
+  push:
+    branches: [master]
+    paths: ['h5/**/*.b64']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  decode:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode, verify, commit
+        run: |
+          set -euo pipefail
+          cd h5
+          for f in favicon.ico assets/grimoire-eye.webp assets/grimoire-horn.webp assets/grimoire-main.webp; do
+            base64 -d "$f.b64" > "$f"
+          done
+          cat > /tmp/expected.sha256 <<'SHAEOF'
+          fda8d57e05b7abf17e194d8abc3cca9793dbb18c12ecf9914af11a546cf27c44  favicon.ico
+          9ea02de1df0c18a9c8251f01eb7cc6b6376ff13feae265785a6004848ac360d8  assets/grimoire-eye.webp
+          292c7f2b2109c6d745367b7843d667bdc0a9b6d65963a0ba4cdfac46f380a855  assets/grimoire-horn.webp
+          786db56c37283eca88d9054d819ca98fc6553dd7289d650fba5a2741b1a9e4e9  assets/grimoire-main.webp
+          SHAEOF
+          sed -i 's/^ *//' /tmp/expected.sha256
+          sha256sum -c /tmp/expected.sha256
+          git rm -q favicon.ico.b64 assets/grimoire-eye.webp.b64 assets/grimoire-horn.webp.b64 assets/grimoire-main.webp.b64
+          git add favicon.ico assets/grimoire-eye.webp assets/grimoire-horn.webp assets/grimoire-main.webp
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "H5: decode binary assets (favicon.ico, grimoire webp plates) from base64, SHA-256 verified"
+          git push
