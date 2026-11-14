@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>雾岛之主 · 秘卷</title>
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="backdrop" id="backdrop"></div>
+<div class="wrap grimoire">
+  <div class="topbar">
+    <a class="btn ghost" href="index.html">← 回育种所</a>
+    <span class="seed-tag">秘卷 · 只有培育出它的人能看</span>
+  </div>
+  <h1>雾岛之主 · 秘卷</h1>
+  <div id="grimoire-body">
+    <!-- 未解锁：只显示封蜡页（门禁）。插画与手稿文字不在静态 HTML 里，
+         只在解锁后由下面的脚本注入，直接打开这个 URL 也看不到图和字。 -->
+    <div class="card" style="text-align:center; padding:28px 16px;">
+      <div style="padding:8px 0 2px;"><svg class="wax-seal" viewBox="0 0 100 100" role="img" aria-label="一枚封蜡"><path d="M50 10 C68 10 86 24 88 44 C90 56 84 62 88 72 C92 86 78 94 62 92 C50 96 32 94 22 84 C10 74 14 60 10 48 C8 32 22 18 36 14 C42 10 44 10 50 10 Z" fill="#a8382f" stroke="#7d2a20" stroke-width="2"/><path d="M50 30 C58 38 58 52 50 62 C42 52 42 38 50 30 Z" fill="#e8dfc8" opacity="0.85"/><path d="M38 66 C46 70 54 70 62 66" fill="none" stroke="#e8dfc8" stroke-width="2" stroke-linecap="round" opacity="0.7"/></svg></div>
+      <p class="hand" style="margin:10px 0 0;">传说 · 雾岛之主</p>
+      <p style="margin:6px 0 0;">还没有人见过它。</p>
+    </div>
+  </div>
+  <div class="btn-row" style="margin-top:18px;">
+    <a class="btn" href="index.html">返回育种所 →</a>
+  </div>
+  <p class="small" style="text-align:center;">雾汀市立文书收件处 · 夜间收件处</p>
+</div>
+<!-- 进场：墨散开，露出页面 -->
+<div class="ink-veil recede"></div>
+<script src="../assets/backdrops.js"></script>
+<script>
+  (function () {
+    var bd = document.getElementById("backdrop");
+    if (bd && window.FogBackdrop) window.FogBackdrop.mount("isle", bd);
+    /* 门禁：只有培育出传说雾兽的存档（won）才能看秘卷。
+       没解锁时只显示上面的封蜡页；插画与手稿文字由下面这段脚本在解锁后才注入，
+       不在静态 HTML 里，所以直接打开 URL 也看不到图和字。 */
+    var won = false;
+    try {
+      var saved = JSON.parse(localStorage.getItem("fog-h5-fog-isle") || "null");
+      won = !!(saved && saved.won);
+    } catch (e) { won = false; }
+    if (!won) return;
+    var body = document.getElementById("grimoire-body");
+    if (!body) return;
+    function makeImg(src, alt, w, h) {
+      var im = document.createElement("img");
+      im.src = src; im.alt = alt; im.width = w; im.height = h;
+      return im;
+    }
+    function detailFigure(src, alt, caption) {
+      var f = document.createElement("figure");
+      f.className = "card";
+      f.appendChild(makeImg(src, alt, 1600, 1600));
+      var c = document.createElement("figcaption");
+      c.className = "hand";
+      c.textContent = caption;
+      f.appendChild(c);
+      return f;
+    }
+    var sub = document.createElement("p");
+    sub.className = "sub";
+    sub.textContent = "Dominus nebulae insulae";
+    var hero = document.createElement("div");
+    hero.className = "grimoire-hero";
+    var fig = document.createElement("figure");
+    fig.className = "grimoire-main";
+    fig.appendChild(makeImg("../assets/grimoire-main.webp", "雾岛之主手稿插画：泛黄羊皮纸上的铁胆墨线画，鹿角、蛾翼与一只琥珀眼", 1120, 2240));
+    var cap = document.createElement("figcaption");
+    cap.textContent = "手稿 · 雾岛之主全图（页边有解剖小图与拉丁批注）";
+    fig.appendChild(cap);
+    var text = document.createElement("div");
+    text.className = "card grimoire-text";
+    text.innerHTML = '<p class="hand">雾最浓的那一夜，它从岛的那一边走过来。<br>没有脚步声。雾跟着它走，像一件拖在地上的斗篷。<br>头顶的角分着杈，像枯树的枝；背后的翅收着，是蛾的翅，上面有眼睛一样的花纹。<br>它只有一只眼睛。琥珀色的，睁开的时候，雾里会亮起一点暖光。<br>岛上的雾兽都带着它的一点影子——角、翅、光，各带一点。<br>只有集齐了它全部影子的那一只，才是它。</p><p class="hand" style="margin-top:14px;">此页只给培育出它的人看。<br>看完请把秘卷合上，不要告诉别人它长什么样。<br>—— 雾岛育种所 · 守夜人手记</p>';
+    hero.appendChild(fig);
+    hero.appendChild(text);
+    var details = document.createElement("div");
+    details.className = "grimoire-details";
+    details.appendChild(detailFigure("../assets/grimoire-eye.webp", "眼睛局部草图：同心圆环，琥珀瞳", "眼睛 · 同心圆环，琥珀瞳。雾里亮起的那一点暖光，就是它。"));
+    details.appendChild(detailFigure("../assets/grimoire-horn.webp", "角局部草图：分杈的角，带生长纹", "角 · 分杈，带生长纹。不是骨头，是雾凝成的。"));
+    body.innerHTML = "";
+    body.appendChild(sub);
+    body.appendChild(hero);
+    body.appendChild(details);
+  })();
+</script>
+</body>
+</html>
