@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>雾汀 · 夜班地图</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<!-- 整幅雾汀夜景地图（整页背景）：六个地点是地图上的灯点，点了进游戏 -->
+<div class="map-bg" id="map-holder"></div>
+<div class="map-hero">
+  <h1>雾汀 · 夜班地图</h1>
+  <p class="sub">深夜值班室里一盏台灯，照着一摞旧文书。<br>
+  六个地方，六件没结案的事。点地图上的灯，进去值班。</p>
+</div>
+
+<!-- 底部抽屉：游戏列表（地图上的标签是主入口，这里是备用） -->
+<details class="map-drawer">
+  <summary>游戏列表 · 六个地方</summary>
+  <div class="map-drawer-list">
+    <a href="baita-lane/index.html"><h3>白塔巷 17 号</h3><p>叙事 · 探索 ｜ 每晚 4 个行动点 ｜ 约 20–40 分钟</p></a>
+    <a href="fog-harbor/index.html"><h3>雾港电报局 · 午夜班</h3><p>推理 · 解谜 ｜ 三道题：谁、怎么进的、为什么 ｜ 约 20–40 分钟</p></a>
+    <a href="lighthouse/index.html"><h3>雾岛灯塔 · 守塔人</h3><p>经营 · 风险 ｜ 30 夜 ｜ 约 30–60 分钟</p></a>
+    <a href="fog-isle/index.html"><h3>雾岛育种所</h3><p>育种 · 合作 ｜ 一季 30 天 ｜ 约 30–60 分钟</p></a>
+    <a href="fog-rpg/index.html"><h3>跑团 · 灯塔熄灭之夜</h3><p>跑团 · 调查 ｜ 1–2 名调查员 ｜ 约 2–3 小时</p></a>
+    <a href="fog-company/index.html"><h3>跑团 · 雾汀生物 · 白班与夜班</h3><p>跑团 · 昼夜不对称 ｜ 2–4 名玩家 ｜ 约 3–4 小时</p></a>
+  </div>
+  <p class="small">每个游戏都有「复制求援提示词」：把你当前已经看到的局面整理成一段话，贴给你的 AI（DeepSeek、GPT、Grok 都行）一起推理。本来就是给 AI 玩的游戏，人类拉 AI 帮忙是鼓励的，不算作弊。提示词里只会有你已经看到的信息，不会有答案。<br><br>
+  跑团本多一个「一键复制 AI 主持人提示词」：把完整的剧本 + 真相 + 规则整理成一段提示词，贴给你的 AI，让它当主持人带团。提示词里有剧本和真相，复制后直接粘贴，别细看。<br><br>
+  进度自动保存在本机浏览器里，刷新不丢。种子号在页面上方，分享同一局给别人时，把带 ?seed= 的链接发过去就行。</p>
+  <p class="small" style="text-align:center; margin-top:18px;">雾汀市立文书收件处 · 夜间收件处</p>
+</details>
+<script src="assets/backdrops.js"></script>
+<script>
+  (function () {
+    var holder = document.getElementById("map-holder");
+    /* 桌面横幅 / 手机竖版按宽度切换（<600px 用 entryMobile 竖版地图，六个灯点都在首屏）。
+       点击只绑一次（事件委托，换图不重绑）；窗口跨过断点时才重挂。 */
+    var current = null;
+    function mountMap() {
+      var scene = (window.innerWidth < 600) ? "entryMobile" : "entry";
+      if (scene === current) return;
+      current = scene;
+      holder.innerHTML = window.FogBackdrop.svg(scene);
+    }
+    window.FogBackdrop.bindMapClicks(holder, function (href) { location.href = href; });
+    mountMap();
+    window.addEventListener("resize", mountMap);
+  })();
+</script>
+</body>
+</html>

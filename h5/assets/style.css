@@ -1,0 +1,455 @@
+/* 雾系列 H5 · 共享样式
+   意象：深夜值班室，一盏台灯照着一摞旧文书。
+   底色雾夜蓝灰 #1f2a33 → #2c3a44；内容卡暖米白旧纸 #efe6d4；
+   唯一强调色琥珀灯光 #e0a64a；印泥红 #a8382f 只用于印章。 */
+:root {
+  --night-1: #1f2a33;
+  --night-2: #2c3a44;
+  --paper: #efe6d4;
+  --paper-2: #e6dcc4;
+  --ink: #2b2620;
+  --ink-soft: #5a5348;
+  --amber: #e0a64a;
+  --amber-deep: #b9832f;
+  --seal: #a8382f;
+  --line: #c9bda2;
+  /* 第 6 项（第二张修复单）：--muted 原先没定义，保安登记表头（.typewriter th）
+     与时间列（.typewriter td:first-child）的弱化样式不生效。 */
+  --muted: #8a8378;
+}
+* { box-sizing: border-box; }
+html {
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+  min-height: 100%;
+  /* 底色放 html 上（第 3 项修法）：html 的背景永远铺满整篇文档；
+     原先底色在 body 上 + background-attachment:fixed，手机上滚到半截会断、露出浅灰白。 */
+  background:
+    radial-gradient(120% 60% at 50% -10%, rgba(224, 166, 74, 0.10), transparent 60%),
+    linear-gradient(180deg, var(--night-1) 0%, var(--night-2) 100%);
+}
+body {
+  margin: 0;
+  overflow-x: hidden;
+  min-height: 100vh;
+  font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  color: #e8e2d4;
+}
+/* 雾：两层极淡的雾气慢慢飘（克制） */
+body::before, body::after {
+  content: "";
+  position: fixed;
+  left: -20%; right: -20%;
+  height: 34vh;
+  pointer-events: none;
+  background: radial-gradient(60% 100% at 30% 50%, rgba(200, 210, 220, 0.07), transparent 70%),
+              radial-gradient(50% 100% at 70% 50%, rgba(200, 210, 220, 0.05), transparent 70%);
+  animation: fogdrift 46s ease-in-out infinite alternate;
+}
+body::before { top: 8%; }
+body::after { top: 52%; animation-duration: 61s; animation-direction: alternate-reverse; }
+@keyframes fogdrift {
+  from { transform: translateX(-3%); }
+  to { transform: translateX(3%); }
+}
+.wrap { max-width: 640px; margin: 0 auto; padding: 18px 16px 64px; position: relative; z-index: 1; }
+/* 首屏主视觉：底图在上方露出约 35% 高度，标题压在底图上；往下滚再进纸卡。
+   顶栏在上、标题在下，标题后面有一层底渐变保证可读，上面留给底图。 */
+.hero {
+  position: relative; z-index: 1;
+  min-height: 35vh;
+  display: flex; flex-direction: column;
+  max-width: 640px; margin: 0 auto;
+  padding: 18px 16px 20px;
+  background: linear-gradient(180deg, transparent 62%, rgba(10,14,18,0.55) 100%);
+}
+.hero .topbar { margin: 0 0 auto; }
+.hero-title { margin-top: auto; }
+.hero h1, .hero .sub { text-shadow: 0 1px 10px rgba(10,14,18,0.9); }
+.hero .sub { margin-bottom: 0; }
+
+/* 标题：衬线 */
+h1, h2, h3, .serif {
+  font-family: Georgia, "Songti SC", "SimSun", "Noto Serif", serif;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+h1 { font-size: 26px; margin: 6px 0 4px; color: #f2ead8; }
+h2 { font-size: 19px; margin: 0 0 8px; color: var(--ink); }
+h3 { font-size: 16px; margin: 0 0 6px; color: var(--ink); }
+.sub { color: #b9b3a4; font-size: 13px; line-height: 1.6; margin: 0 0 14px; }
+.small { font-size: 12px; color: #9a958a; line-height: 1.6; }
+
+/* 顶栏：种子号 + 操作 */
+.topbar {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  margin: 4px 0 14px;
+}
+.seed-tag {
+  font-family: "Courier New", monospace;
+  font-size: 12px; color: #d8cfae;
+  border: 1px solid rgba(224, 166, 74, 0.45);
+  border-radius: 20px; padding: 4px 10px;
+  background: rgba(224, 166, 74, 0.08);
+}
+.topbar .spacer { flex: 1; }
+.link-btn {
+  background: none; border: none; color: #cfc8b4;
+  font-size: 13px; padding: 8px 6px; cursor: pointer;
+  text-decoration: underline; text-underline-offset: 3px;
+}
+
+/* 内容卡：暖米白旧纸 */
+.card {
+  background:
+    radial-gradient(140% 120% at 20% 0%, rgba(255, 255, 255, 0.35), transparent 55%),
+    linear-gradient(180deg, var(--paper) 0%, var(--paper-2) 100%);
+  color: var(--ink);
+  border-radius: 6px;
+  padding: 16px 16px 14px;
+  margin: 0 0 14px;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.25), 0 10px 28px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(120, 100, 60, 0.25);
+}
+.card p { margin: 0 0 10px; line-height: 1.75; font-size: 15px; }
+.card p:last-child { margin-bottom: 0; }
+.card .meta { font-size: 12px; color: var(--ink-soft); letter-spacing: 0.06em; }
+
+/* 记录 / 电报：等宽，打字机感 */
+.typewriter, .record {
+  font-family: "Courier New", ui-monospace, monospace;
+  font-size: 13.5px; line-height: 1.8;
+  background: #f6efdd;
+  border: 1px dashed var(--line);
+  border-radius: 4px;
+  padding: 10px 12px;
+  margin: 0 0 10px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.record .r-title { font-weight: bold; }
+.record .r-no { color: var(--seal); }
+
+/* 按钮：够大，手指好点；琥珀灯光 */
+.btn {
+  display: block; width: 100%;
+  min-height: 50px;
+  font-size: 16px; line-height: 1.4;
+  color: #241d12;
+  background: linear-gradient(180deg, #eab95c, var(--amber));
+  border: 1px solid var(--amber-deep);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 0 0 10px;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
+}
+.btn:active { transform: translateY(1px); box-shadow: none; }
+.btn.secondary {
+  background: transparent;
+  color: #e8dfc8;
+  border: 1px solid rgba(232, 223, 200, 0.45);
+  box-shadow: none;
+}
+/* 第 2 项修法：纸卡里的次要按钮，原先是浅米色字 #e8dfc8 放在暖纸 #efe6d4 上，
+   对比度约 1.1:1，几乎看不见（白塔巷「换个地方」的房间按钮、电报局整份「记录清单」）。
+   纸卡内改成深墨色字 + 细墨线边框。暗底上（结局页「同一局重玩」）仍用浅色，不受影响。 */
+.card .btn.secondary {
+  color: var(--ink);
+  border: 1px solid var(--ink-soft);
+  background: transparent;
+}
+.btn.ghost {
+  background: transparent;
+  color: #cfc8b4;
+  border: 1px dashed rgba(207, 200, 180, 0.4);
+  box-shadow: none;
+  text-align: center;
+}
+.btn:disabled { opacity: 0.45; cursor: default; }
+.btn-row { display: flex; gap: 10px; }
+.btn-row .btn { flex: 1; }
+.btn .hint { display: block; font-size: 12px; color: rgba(36, 29, 18, 0.65); margin-top: 2px; }
+
+/* 选项（电报局指认的三组选择） */
+.pick-group { margin: 0 0 12px; }
+.pick-group .pick-label { font-size: 13px; color: var(--ink-soft); margin: 0 0 6px; letter-spacing: 0.08em; }
+.pick-options { display: flex; flex-wrap: wrap; gap: 8px; }
+.pick {
+  min-height: 44px; padding: 10px 14px;
+  font-size: 15px; cursor: pointer;
+  color: var(--ink);
+  background: #f6efdd;
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+}
+.pick.selected {
+  border-color: var(--amber-deep);
+  background: #f3e2b8;
+  box-shadow: 0 0 0 1px var(--amber-deep);
+}
+
+/* 状态条（灯塔资源） */
+.status-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px;
+  margin: 0 0 10px;
+}
+.status-cell {
+  background: #f6efdd; border: 1px solid var(--line); border-radius: 6px;
+  padding: 8px 4px; text-align: center;
+}
+.status-cell .v { font-size: 18px; font-weight: bold; color: var(--ink); }
+.status-cell .k { font-size: 11px; color: var(--ink-soft); margin-top: 2px; }
+.ship-log {
+  font-family: "Courier New", monospace; font-size: 14px; letter-spacing: 2px;
+  color: var(--ink); word-break: break-all; line-height: 1.8;
+}
+
+/* 印章：印泥红，只用于“暂缓结案 / 已归档 / 退回” */
+.stamp {
+  display: inline-block;
+  color: var(--seal);
+  border: 2px solid var(--seal);
+  border-radius: 4px;
+  padding: 3px 10px;
+  font-family: Georgia, "Songti SC", serif;
+  font-size: 15px; font-weight: bold; letter-spacing: 0.14em;
+  transform: rotate(-4deg);
+  opacity: 0.92;
+  margin: 4px 0;
+}
+.stamp.pop { animation: stampin 0.28s ease-out; }
+@keyframes stampin {
+  0% { transform: rotate(-4deg) scale(1.6); opacity: 0; }
+  60% { transform: rotate(-4deg) scale(0.96); opacity: 1; }
+  100% { transform: rotate(-4deg) scale(1); opacity: 0.92; }
+}
+
+/* 灯光呼吸（灯塔的光、台灯） */
+.lamp-glow { animation: breathe 5s ease-in-out infinite; }
+@keyframes breathe {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; }
+}
+
+/* 日志 / 流水 */
+.log { margin: 0; padding: 0; list-style: none; }
+.log li {
+  padding: 8px 2px; border-bottom: 1px dashed var(--line);
+  font-size: 14px; line-height: 1.7; color: var(--ink);
+}
+.log li:last-child { border-bottom: none; }
+
+/* 封面插画 */
+.cover { display: block; width: 100%; height: auto; border-radius: 6px; margin: 0 0 12px; }
+
+/* 轻提示 */
+.fog-toast {
+  position: fixed; left: 50%; bottom: 28px;
+  transform: translate(-50%, 16px);
+  background: #2b2620; color: #f2ead8;
+  border: 1px solid rgba(224, 166, 74, 0.6);
+  border-radius: 24px; padding: 10px 18px;
+  font-size: 14px; opacity: 0; pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+  z-index: 50; max-width: 88vw; text-align: center;
+}
+.fog-toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* 结局 */
+.ending-title { font-size: 22px; margin: 0 0 6px; }
+.reveal-box {
+  border: 1px dashed var(--seal); border-radius: 6px;
+  padding: 12px; margin: 12px 0;
+  background: #f6efdd;
+}
+.reveal-box .seal-note { color: var(--seal); font-size: 13px; letter-spacing: 0.1em; margin: 0 0 8px; }
+details.reveal summary {
+  cursor: pointer; color: var(--seal); font-size: 14px;
+  letter-spacing: 0.08em; padding: 6px 0;
+}
+details.reveal .reveal-body { margin-top: 8px; font-size: 14px; line-height: 1.8; }
+
+/* 桌面端：居中窄栏不变，只是更宽一点 */
+@media (min-width: 720px) {
+  .wrap { max-width: 680px; }
+  h1 { font-size: 30px; }
+}
+
+/* ---- 跑团本：纸质表格（交班表）与打字机表格（保安登记） ---- */
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 4px 0 10px; }
+.paper-table { width: 100%; border-collapse: collapse; font-size: 14px; background: #f6efdd; }
+.paper-table th, .paper-table td { border: 1px solid var(--line); padding: 6px 8px; text-align: left; vertical-align: top; }
+.paper-table th { font-family: Georgia, 'Songti SC', serif; background: #eee2c4; font-size: 13px; white-space: nowrap; }
+.paper-table td input { width: 100%; min-width: 56px; border: none; background: transparent; font-size: 14px; color: var(--ink); padding: 2px 0; outline: none; }
+.paper-table td input:focus { background: #fdf6e3; outline: 1.5px solid var(--amber); }
+/* 第 4 项（第二张修复单）：交班表在 390px 宽下比卡片宽约 42px，「时间」那一列要横滑才看得到。
+   窄屏下每一行变成一张小卡片（时间、地点、事件、处理、备注竖着排，列名用 data-label 显示），
+   宽屏保持表格。 */
+@media (max-width: 480px) {
+  .paper-table, .paper-table tbody, .paper-table tr, .paper-table td { display: block; width: 100%; }
+  .paper-table thead { display: none; }
+  .paper-table tr { margin: 0 0 12px; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: #f6efdd; }
+  .paper-table td { border: none; border-bottom: 1px dashed var(--line); padding: 8px 10px; }
+  .paper-table td:last-child { border-bottom: none; }
+  .paper-table td::before {
+    content: attr(data-label);
+    display: block; font-size: 12px; color: var(--ink-soft);
+    font-family: Georgia, 'Songti SC', serif; letter-spacing: 0.08em; margin-bottom: 2px;
+  }
+  .paper-table td input { min-width: 0; }
+}
+.typewriter { width: 100%; border-collapse: collapse; font-family: ui-monospace, 'Courier New', monospace; font-size: 14px; }
+.typewriter th, .typewriter td { border-bottom: 1px solid #d8cbb0; padding: 6px 8px; text-align: left; }
+.typewriter th { font-size: 13px; color: var(--muted); }
+.typewriter td:first-child { white-space: nowrap; color: var(--muted); }
+textarea { width: 100%; box-sizing: border-box; font-size: 15px; padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 8px; background: #f6efdd; color: var(--ink); font-family: ui-monospace, 'Courier New', monospace; resize: vertical; }
+/* 育种所：交易雾币数、命名用的小输入框（第 3 项，第二张修复单） */
+.mini-input {
+  display: block; width: 100%;
+  font-size: 15px; padding: 10px 12px;
+  border: 1.5px solid var(--line); border-radius: 8px;
+  background: #f6efdd; color: var(--ink);
+  margin: 0 0 10px;
+}
+
+/* ================= 视觉大改（2026-11-14）：整页底图 + 标本册 ================= */
+/* ---- 整页底图（游戏页）：固定在内容后面，SVG 铺满，压暗 + 暗角 + 两层飘雾 ---- */
+.backdrop { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.backdrop svg { display: block; width: 100%; height: 100%; }
+.bd-shade {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(31,42,51,0.26), rgba(31,42,51,0.12) 42%, rgba(31,42,51,0.30)),
+    radial-gradient(120% 90% at 50% 45%, transparent 62%, rgba(10,14,18,0.28) 100%);
+}
+.bd-fog {
+  position: absolute; left: -25%; right: -25%; height: 36vh;
+  background: radial-gradient(60% 100% at 30% 50%, rgba(200,210,220,0.09), transparent 70%),
+              radial-gradient(50% 100% at 70% 50%, rgba(200,210,220,0.06), transparent 70%);
+  animation: fogdrift 58s ease-in-out infinite alternate;
+}
+.bd-fog-a { top: 6%; }
+.bd-fog-b { top: 56%; animation-duration: 74s; animation-direction: alternate-reverse; }
+/* 视差层：前景/背景随滚动平移，单位是 viewBox 单位（transform-box: view-box） */
+.bd-bg, .bd-fg { transform-box: view-box; will-change: transform; }
+/* 灯塔光柱：绕灯室很慢地转（transform-origin 就是灯室在 viewBox 里的位置） */
+.bd-beam { animation: beamsweep 60s linear infinite; }
+@keyframes beamsweep { from { transform: rotate(-14deg); } to { transform: rotate(14deg); } }
+/* ---- 入口页：地图是整页背景，灯点直接在地图上；卡片列表缩成底部抽屉 ---- */
+.map-bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
+.map-bg svg { display: block; width: 100%; height: 100%; }
+.map-hero { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; padding: 18px 16px 0; }
+.map-hero h1, .map-hero .sub { text-shadow: 0 1px 8px rgba(10,14,18,0.85); }
+.lamp-point { outline: none; }
+.lamp-point:focus circle:last-of-type { stroke-width: 3; }
+.map-drawer {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 2;
+  max-width: 640px; margin: 0 auto;
+  background: linear-gradient(180deg, rgba(239,230,212,0.97), #efe6d4);
+  color: var(--ink);
+  border-radius: 10px 10px 0 0;
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.45);
+  max-height: 62vh; overflow-y: auto;
+}
+.map-drawer summary {
+  cursor: pointer; padding: 12px 16px;
+  font-family: Georgia, 'Songti SC', serif; font-size: 15px; letter-spacing: 0.06em;
+  list-style: none;
+}
+.map-drawer summary::-webkit-details-marker { display: none; }
+.map-drawer-list { padding: 0 16px 12px; }
+.map-drawer-list a {
+  display: block; padding: 10px 0;
+  border-top: 1px dashed var(--line); text-decoration: none; color: var(--ink);
+}
+.map-drawer-list a h3 { font-size: 15px; margin: 0 0 2px; }
+.map-drawer-list a p { font-size: 12.5px; margin: 0; color: var(--ink-soft); line-height: 1.6; }
+.map-drawer .small { padding: 0 16px 16px; color: var(--ink-soft); }
+/* 个体卡横排：电报局/跑团是剪影在左、文字在右；育种所只有文字（名字、编号、性状），
+   文字包在 .pick-text 里，不绕着图折行 */
+.pick { display: flex; align-items: center; gap: 8px; text-align: left; }
+.pick .figure-mini { flex-shrink: 0; margin-right: 0; }
+.pick-text { flex: 1; min-width: 0; }
+/* ---- 秘卷页（传说雾兽） ---- */
+.grimoire { position: relative; z-index: 1; }
+.grimoire h1, .grimoire .sub { text-shadow: 0 1px 8px rgba(10,14,18,0.85); }
+.grimoire-main { margin: 14px 0; }
+.grimoire-main img {
+  display: block; width: 100%; height: auto;
+  border: 1px solid var(--line); border-radius: 8px;
+  box-shadow: 0 10px 32px rgba(0,0,0,0.5);
+  background: #e8dfc8;
+}
+.grimoire-main figcaption, .grimoire-details figcaption {
+  font-size: 12.5px; color: #e8dfc8; opacity: 0.85; text-align: center;
+  margin-top: 8px; line-height: 1.6; text-shadow: 0 1px 6px rgba(10,14,18,0.8);
+}
+.grimoire-text .hand { font-size: 15.5px; line-height: 2; }
+.grimoire-details { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+.grimoire-details figure { margin: 0; padding: 10px; }
+.grimoire-details img { display: block; width: 100%; height: auto; border-radius: 4px; }
+.grimoire-details figcaption { color: var(--ink-soft); text-shadow: none; opacity: 1; }
+@media (max-width: 480px) { .grimoire-details { grid-template-columns: 1fr; } }
+/* 桌面秘卷页（第 7 项）：插画与手稿正文左右并排，插画按视口高度完整显示（不裁切）。
+   手机保持上下叠放。 */
+@media (min-width: 900px) {
+  .grimoire { max-width: 980px; }
+  .grimoire-hero { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 24px; align-items: start; }
+  .grimoire-hero .grimoire-main { margin: 0; }
+  /* 顶栏 + 标题约占 215px，图注 + 间距约 40px：插画 + 图注要在首屏完整露出（1280×800 / 1440×900 实测）。
+     max(360px, …) 防止极矮窗口把图压得太小；支持 dvh 的浏览器用动态视口高度。 */
+  .grimoire-hero .grimoire-main img { max-height: max(360px, calc(100vh - 256px)); max-height: max(360px, calc(100dvh - 256px)); width: auto; max-width: 100%; object-fit: contain; margin: 0 auto; }
+  .grimoire-hero .grimoire-text { margin: 0; }
+}
+/* 封蜡（传说格未解锁）：朱砂封蜡 + 月牙 */
+.wax-seal { width: 72px; height: 72px; display: inline-block; }
+/* 墨迹转场：墨从边缘洇开盖住屏幕（进秘卷），或墨散开露出页面（秘卷进场） */
+.ink-veil {
+  position: fixed; inset: 0; z-index: 60; pointer-events: none;
+  background: radial-gradient(130% 130% at 50% 50%, rgba(12,16,20,0.35) 0%, rgba(12,16,20,0.88) 58%, rgba(8,11,14,0.97) 100%);
+  opacity: 0;
+}
+.ink-veil.spread { animation: inkspread 1s ease-out forwards; }
+@keyframes inkspread { from { opacity: 0; transform: scale(1.35); } to { opacity: 1; transform: scale(1); } }
+.ink-veil.recede { opacity: 1; animation: inkrecede 1.2s ease-out forwards; }
+@keyframes inkrecede { from { opacity: 1; } to { opacity: 0; } }
+/* ---- 标本册（育种所图鉴） ---- */
+/* 物种页签：四个基础物种 + 见过的杂交种 + 传说页；没见过的是「？」 */
+.specimen-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin: 0 0 12px; }
+.specimen-tab {
+  min-height: 40px; padding: 8px 12px;
+  font-size: 14px; cursor: pointer;
+  color: var(--ink); background: #f6efdd;
+  border: 1.5px solid var(--line); border-radius: 20px;
+  font-family: Georgia, 'Songti SC', serif;
+}
+.specimen-tab.active { border-color: var(--amber-deep); background: #f3e2b8; }
+.specimen-tab:disabled { opacity: 0.5; cursor: default; }
+.specimen-tab.legendary-tab { border-color: #c9a86a; color: #8a6d2f; }
+.specimen-tab.legendary-tab.active { background: #f3e8c8; }
+.specimen-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 480px) { .specimen-grid { grid-template-columns: 1fr; } }
+.specimen {
+  border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
+  background: #f6efdd;
+}
+.specimen .specimen-label { padding: 12px 14px; }
+.specimen .specimen-label .hand {
+  font-family: 'Kaiti SC', 'STKaiti', 'KaiTi', Georgia, serif;
+  font-size: 14.5px; line-height: 1.9; color: var(--ink);
+}
+.specimen .specimen-label .hand .k { color: var(--ink-soft); font-size: 12.5px; }
+.specimen.locked .specimen-label .hand { color: var(--ink-soft); }
+/* 传说页：褪色金边 */
+.specimen.legendary { border: 2px solid #c9a86a; box-shadow: 0 0 0 1px #efe6d4, 0 4px 18px rgba(0,0,0,0.25); }
+.specimen.legendary .specimen-label { background: linear-gradient(180deg, #f3e8c8, #f6efdd); }
+/* 最新诞生：文字登记行（编号 + 名字性状 + 代数） */
+.newborn-row { display: block; }
+.newborn { text-align: left; padding: 6px 0; border-top: 1px dashed var(--line); }
+.newborn:first-child { border-top: none; }
+.newborn .meta { font-size: 13px; color: var(--ink); line-height: 1.7; }
+/* 人像小剪影（跑团角色卡 / 电报局嫌疑人，克制） */
+.figure-mini { width: 56px; height: 56px; border-radius: 50%; background: #e9dfc6; border: 1px solid var(--line); overflow: hidden; display: inline-block; vertical-align: middle; margin-right: 8px; }
+.figure-mini svg { width: 100%; height: 100%; }
